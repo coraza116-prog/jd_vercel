@@ -1,722 +1,1050 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Network - Protect Earth</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>API Nexus - 智能数据中枢</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-strong: rgba(255, 255, 255, 0.95);
+            --text-main: #2d3748;
+            --text-light: #718096;
         }
 
-        :root {
-            --primary: #2e7d32;
-            --secondary: #4caf50;
-            --accent: #8bc34a;
-            --light: #e8f5e9;
-            --dark: #1b5e20;
-            --text: #333333;
-            --white: #ffffff;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--light);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: var(--white);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .nav-container {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .logo i {
-            font-size: 2rem;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 2rem;
-        }
-
-        nav ul li a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 0;
-            position: relative;
-        }
-
-        nav ul li a:hover {
-            color: var(--accent);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: var(--white);
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--accent);
-            color: var(--white);
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn:hover {
-            background-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        section {
-            padding: 5rem 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent);
-            border-radius: 2px;
-        }
-
-        .section-title p {
-            color: var(--text);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-img {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .about-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .about-img:hover img {
-            transform: scale(1.05);
-        }
-
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 2rem 1rem;
-            background-color: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .stat-item i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .stat-item h3 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-item p {
-            color: var(--text);
-        }
-
-        .initiatives {
-            background-color: var(--white);
-        }
-
-        .initiatives-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .initiative-card {
-            background-color: var(--light);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .initiative-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .initiative-img {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .initiative-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .initiative-card:hover .initiative-img img {
-            transform: scale(1.1);
-        }
-
-        .initiative-content {
-            padding: 1.5rem;
-        }
-
-        .initiative-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .initiative-content p {
-            margin-bottom: 1.5rem;
-        }
-
-        .cta {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: var(--white);
-            text-align: center;
-            padding: 5rem 0;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .cta p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta .btn {
-            background-color: var(--white);
-            color: var(--primary);
-        }
-
-        .cta .btn:hover {
-            background-color: var(--accent);
-            color: var(--white);
-        }
-
-        footer {
-            background-color: var(--dark);
-            color: var(--white);
-            padding: 3rem 0 1rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--accent);
-        }
-
-        .footer-column p {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links li a {
-            color: var(--light);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links li a:hover {
-            color: var(--accent);
-            padding-left: 5px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            overflow-x: hidden; /* 防止背景球撑开滚动条 */
+            position: relative;
+        }
+
+        /* --- 修复核心：层级控制 --- */
+        
+        /* 1. 背景装饰 (层级 1) */
+        .bg-shape {
+            position: fixed; /* 改为 fixed，防止随页面滚动 */
             border-radius: 50%;
-            color: var(--white);
-            text-decoration: none;
+            filter: blur(80px);
+            z-index: 1; /* 正数层级，但在内容之下 */
+            animation: float 10s infinite ease-in-out;
+            pointer-events: none; /* 防止挡住点击 */
+        }
+        .shape-1 { width: 300px; height: 300px; background: #667eea; top: 10%; left: 10%; }
+        .shape-2 { width: 400px; height: 400px; background: #764ba2; bottom: 10%; right: 10%; animation-delay: -5s; }
+
+        /* 2. 主界面容器 (层级 10) */
+        .container {
+            position: relative;
+            z-index: 10; /* 确保比背景高 */
+            
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            max-width: 600px;
+            width: 100%;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        /* 3. 弹窗遮罩 (层级 100) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 100; /* 最高层级 */
+            
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
             transition: all 0.3s ease;
         }
 
-        .social-links a:hover {
-            background-color: var(--accent);
-            transform: translateY(-5px);
+        /* 动画定义 */
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 50px); }
         }
 
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        /* ... 其他样式保持不变 ... */
+        .logo-wrapper { position: relative; width: 90px; height: 90px; margin: 0 auto 20px; }
+        .logo { width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 45px; color: white; cursor: pointer; transition: transform 0.3s; }
+        .logo:hover { transform: scale(1.1) rotate(5deg); }
+        
+        h1 { color: var(--text-main); margin-bottom: 10px; font-weight: 800; }
+        .subtitle { color: var(--text-light); margin-bottom: 30px; min-height: 24px; font-family: monospace; }
+        
+        .status-pill { display: inline-flex; align-items: center; padding: 6px 16px; background: rgba(16, 185, 129, 0.1); border-radius: 50px; color: #059669; font-size: 14px; margin-bottom: 30px; }
+        .dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; margin-right: 8px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        .mobile-menu {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
+        .features { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+        .feature-item { background: rgba(255,255,255,0.5); padding: 20px; border-radius: 16px; transition: transform 0.3s; }
+        .feature-item:hover { transform: translateY(-5px); background: white; }
+        .feature-icon { font-size: 28px; display: block; margin-bottom: 10px; }
+        .feature-title { font-weight: bold; font-size: 15px; color: var(--text-main); }
+        .feature-desc { font-size: 12px; color: var(--text-light); }
 
-        @media (max-width: 992px) {
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .initiatives-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            nav ul {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--primary);
-                flex-direction: column;
-                padding: 1rem 0;
-                text-align: center;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-            }
-            
-            nav ul.active {
-                display: flex;
-            }
-            
-            nav ul li {
-                margin: 0;
-                padding: 0.8rem 0;
-            }
-            
-            .mobile-menu {
-                display: block;
-            }
-            
-            .initiatives-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Animation for stats counter */
-        .counter {
-            transition: all 0.5s ease;
-        }
+        .terminal-box { background: #1e1e1e; border-radius: 12px; padding: 20px; margin-bottom: 30px; text-align: left; font-family: monospace; font-size: 13px; color: #00ff00; display: none; }
+        
+        .button-group { display: flex; gap: 15px; justify-content: center; }
+        .btn { padding: 14px 30px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn-primary { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: white; }
+        .btn-secondary { background: white; color: var(--text-main); }
+        
+        /* 弹窗样式 */
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-card { background: var(--glass-strong); padding: 40px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; transform: scale(0.8); transition: 0.3s; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .modal-overlay.active .modal-card { transform: scale(1); }
+        .modal-input { width: 100%; padding: 12px; margin: 20px 0; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; }
+        .modal-input:focus { border-color: var(--primary); }
+        .close-modal { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999; }
+        
+        @media (max-width: 480px) { .features { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container nav-container">
-            <div class="logo">
-                <i class="fas fa-seedling"></i>
-                <span>Green Network</span>
-            </div>
-            <nav>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#initiatives">Initiatives</a></li>
-                    <li><a href="#get-involved">Get Involved</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <!-- 1. 背景装饰 -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container hero-content">
-            <h1>Protect Our Planet, Preserve Our Future</h1>
-            <p>Join the global movement to create a sustainable world through conservation, education, and community action.</p>
-            <a href="#get-involved" class="btn">Join Our Network</a>
+    <!-- 2. 主界面 -->
+    <div class="container">
+        <div class="logo-wrapper">
+            <div class="logo" id="rocketLogo">🚀</div>
         </div>
-    </section>
+        
+        <h1>API Nexus</h1>
+        <p class="subtitle" id="typewriter"></p>
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Green Network</h2>
-                <p>We are a global community dedicated to environmental protection and sustainable development.</p>
-            </div>
-            <div class="about-content">
-                <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Team planting trees">
-                </div>
-                <div class="about-text">
-                    <h3>Our Mission</h3>
-                    <p>Green Network is committed to creating a sustainable future by protecting natural ecosystems, promoting renewable energy, and empowering communities to take environmental action.</p>
-                    <p>Founded in 2010, we've grown from a small grassroots organization to an international network with over 50,000 members across 120 countries.</p>
-                    <p>Our approach combines scientific research, community engagement, and policy advocacy to address the most pressing environmental challenges of our time.</p>
-                    <a href="#" class="btn">Learn More</a>
-                </div>
-            </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <i class="fas fa-tree"></i>
-                    <h3 class="counter" data-target="2500000">0</h3>
-                    <p>Trees Planted</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-users"></i>
-                    <h3 class="counter" data-target="50000">0</h3>
-                    <p>Active Members</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-globe-americas"></i>
-                    <h3 class="counter" data-target="120">0</h3>
-                    <p>Countries Reached</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-recycle"></i>
-                    <h3 class="counter" data-target="1500">0</h3>
-                    <p>Cleanup Projects</p>
-                </div>
-            </div>
+        <div class="status-pill">
+            <div class="dot"></div> System Operational
         </div>
-    </section>
 
-    <!-- Initiatives Section -->
-    <section class="initiatives" id="initiatives">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Initiatives</h2>
-                <p>Discover the key programs and projects we're implementing to protect our planet.</p>
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-title">极速响应</div>
+                <div class="feature-desc">&lt; 20ms</div>
             </div>
-            <div class="initiatives-grid">
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://dialogue.earth/content/uploads/2021/04/lessons-from-the-rush-to-reforest-china-dialogue-2400x1599.jpg" alt="Reforestation">
-                    </div>
-                    <div class="initiative-content">
-                        <h3>Global Reforestation</h3>
-                        <p>Planting millions of trees worldwide to restore ecosystems, combat climate change, and protect biodiversity.</p>
-                        <a href="#" class="btn">Learn More</a>
-                    </div>
-                </div>
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1621451537084-482c73073a0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Ocean Conservation">
-                    </div>
-                    <div class="initiative-content">
-                        <h3>Ocean Conservation</h3>
-                        <p>Protecting marine ecosystems, reducing plastic pollution, and promoting sustainable fishing practices.</p>
-                        <a href="#" class="btn">Learn More</a>
-                    </div>
-                </div>
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80" alt="Renewable Energy">
-                    </div>
-                    <div class="initiative-content">
-                        <h3>Renewable Energy</h3>
-                        <p>Promoting solar, wind, and other clean energy sources to reduce dependence on fossil fuels.</p>
-                        <a href="#" class="btn">Learn More</a>
-                    </div>
-                </div>
+            <div class="feature-item">
+                <div class="feature-icon">🛡️</div>
+                <div class="feature-title">安全加密</div>
+                <div class="feature-desc">AES-256</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">💎</div>
+                <div class="feature-title">高可用</div>
+                <div class="feature-desc">99.99%</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🌍</div>
+                <div class="feature-title">全球节点</div>
+                <div class="feature-desc">CDN 加速</div>
             </div>
         </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section class="cta" id="get-involved">
-        <div class="container">
-            <h2>Join Our Global Movement</h2>
-            <p>Together, we can create a sustainable future for generations to come. Every action counts, no matter how small.</p>
-            <a href="#" class="btn">Become a Member</a>
+        <div class="terminal-box" id="terminal">
+            <div style="margin-bottom:10px; display:flex; gap:5px;">
+                <div style="width:10px; height:10px; background:#ff5f56; border-radius:50%"></div>
+                <div style="width:10px; height:10px; background:#ffbd2e; border-radius:50%"></div>
+                <div style="width:10px; height:10px; background:#27c93f; border-radius:50%"></div>
+            </div>
+            <div id="terminal-content"></div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Green Network</h3>
-                    <p>We are dedicated to protecting our planet through collaborative action, education, and sustainable solutions.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#initiatives">Initiatives</a></li>
-                        <li><a href="#get-involved">Get Involved</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Our Programs</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Reforestation</a></li>
-                        <li><a href="#">Ocean Cleanup</a></li>
-                        <li><a href="#">Wildlife Protection</a></li>
-                        <li><a href="#">Climate Education</a></li>
-                        <li><a href="#">Sustainable Agriculture</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Copper Creek Drive, New York</p>
-                    <p><i class="fas fa-phone"></i> +1 (312) 171-0771</p>
-                    <p><i class="fas fa-envelope"></i> support@greennetwork.org</p>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 Green Network. All rights reserved.</p>
-            </div>
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="openEmailModal()">📩 获取开发文档</button>
+            <button class="btn btn-secondary" onclick="runDiagnostics()">🔍 系统自检</button>
         </div>
-    </footer>
+        
+        <div style="margin-top:40px; font-size:12px; color:#aaa;">© 2026 API Nexus Platform</div>
+    </div>
+
+    <!-- 3. 弹窗组件 -->
+    <div class="modal-overlay" id="emailModal" onclick="closeEmailModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeEmailModal(event)">×</button>
+            <div style="font-size:40px; margin-bottom:15px;">📧</div>
+            <h3>发送文档至邮箱</h3>
+            <p style="font-size:13px; color:#666; margin-top:5px;">我们将发送完整 API 密钥与示例文档。</p>
+            
+            <input type="email" class="modal-input" id="userEmail" placeholder="name@example.com">
+            
+            <button class="btn btn-primary" id="sendBtn" style="width:100%" onclick="sendEmailAction()">
+                立即发送
+            </button>
+        </div>
+    </div>
 
     <script>
-        // Mobile Menu Toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('active');
-        });
+        // 打字机
+        const text = "高性能分布式数据处理与监控服务";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById('typewriter').innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+        window.onload = typeWriter;
 
-        // Counter Animation
-        function animateCounters() {
-            const counters = document.querySelectorAll('.counter');
-            const speed = 200; // The lower the slower
-            
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                
-                const inc = target / speed;
-                
-                if(count < target) {
-                    counter.innerText = Math.ceil(count + inc);
-                    setTimeout(animateCounters, 1);
-                } else {
-                    counter.innerText = target;
-                }
-            });
+        // 弹窗逻辑
+        const modal = document.getElementById('emailModal');
+        const sendBtn = document.getElementById('sendBtn');
+        const emailInput = document.getElementById('userEmail');
+
+        function openEmailModal() {
+            modal.classList.add('active');
+            emailInput.value = '';
+            sendBtn.innerHTML = '立即发送';
+            sendBtn.style.background = '';
+            sendBtn.disabled = false;
         }
 
-        // Initialize counters when page loads
-        window.addEventListener('load', animateCounters);
+        function closeEmailModal() {
+            modal.classList.remove('active');
+        }
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    document.querySelector('nav ul').classList.remove('active');
-                }
-            });
-        });
+        function sendEmailAction() {
+            if(!emailInput.value.includes('@')) {
+                alert('请输入有效的邮箱'); return;
+            }
+            sendBtn.innerHTML = '⏳ 发送中...';
+            sendBtn.disabled = true;
+            setTimeout(() => {
+                sendBtn.innerHTML = '✅ 已发送';
+                sendBtn.style.background = '#10b981';
+                setTimeout(closeEmailModal, 1000);
+            }, 1500);
+        }
+
+        // 自检逻辑
+        function runDiagnostics() {
+            const t = document.getElementById('terminal');
+            const c = document.getElementById('terminal-content');
+            t.style.display = 'block';
+            c.innerHTML = '> Initializing...<br>';
+            setTimeout(() => c.innerHTML += '> Connecting to mesh network...<br>', 500);
+            setTimeout(() => c.innerHTML += '> Verifying SSL... [OK]<br>', 1000);
+            setTimeout(() => c.innerHTML += '> Checking nodes... 100%<br>', 1800);
+            setTimeout(() => c.innerHTML += '<span style="color:#00ff00;font-weight:bold">> SYSTEM READY.</span>', 2500);
+        }
+
+        // 火箭彩蛋
+        document.getElementById('rocketLogo').onclick = function() {
+            this.style.transform = 'translateY(-500px)';
+            setTimeout(() => {
+                this.style.transition = 'none';
+                this.style.transform = 'translateY(100px)';
+                setTimeout(() => {
+                    this.style.transition = 'transform 0.5s';
+                    this.style.transform = 'translateY(0)';
+                }, 50);
+            }, 500);
+        }
     </script>
-</body>
 
+
+
+<style>
+  :root{
+    --glass-bg: rgba(255,255,255,.55);
+    --glass-border: rgba(255,255,255,.55);
+    --text-strong:#1f1f1f;
+    --text-mid: rgba(0,0,0,.55);
+    --text-soft: rgba(0,0,0,.40);
+    --shadow: 0 10px 30px rgba(0,0,0,.18);
+    --collapsed-size: 74px;
+  }
+
+  /* ===== 容器 ===== */
+  #music-container{
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    z-index: 9999;
+    font-family: "微软雅黑", Arial, sans-serif;
+    user-select: none;
+  }
+
+  /* ===== 折叠态：圆盘 + 波纹 ===== */
+  #music-container.collapsed{
+    width: var(--collapsed-size);
+    height: var(--collapsed-size);
+  }
+
+  .disc-wrap{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    overflow: visible;
+  }
+
+  /* 静态圈纹（常驻） */
+  .disc-wrap .ring{
+    position:absolute;
+    inset: 0;
+    border-radius: 999px;
+    pointer-events:none;
+  }
+  .disc-wrap .ring.r1{
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,.10) inset,
+      0 0 18px rgba(0,0,0,.35);
+  }
+  .disc-wrap .ring.r2{
+    inset: -10px;
+    box-shadow: 0 0 0 2px rgba(255,255,255,.10) inset;
+    opacity: .35;
+    filter: blur(.2px);
+  }
+  .disc-wrap .ring.r3{
+    inset: -20px;
+    box-shadow: 0 0 0 2px rgba(255,255,255,.08) inset;
+    opacity: .20;
+    filter: blur(.4px);
+  }
+
+  /* ===== 播放时：水波纹扩散 ===== */
+  .disc-wrap::before,
+  .disc-wrap::after{
+    content:"";
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    width: 68px;
+    height: 68px;
+    border-radius: 999px;
+    transform: translate(-50%,-50%) scale(0.85);
+    pointer-events:none;
+    opacity: 0;
+
+    background:
+      repeating-radial-gradient(circle,
+        rgba(255,255,255,.18) 0 2px,
+        rgba(255,255,255,0)   2px 8px);
+    filter: drop-shadow(0 0 10px rgba(255,255,255,.10));
+  }
+
+  #music-container.playing.collapsed .disc-wrap::before{
+    animation: rippleOut 2.0s ease-out infinite;
+  }
+  #music-container.playing.collapsed .disc-wrap::after{
+    animation: rippleOut 2.0s ease-out infinite;
+    animation-delay: .9s;
+    opacity: 0;
+  }
+
+  @keyframes rippleOut{
+    0%   { transform: translate(-50%,-50%) scale(0.85); opacity: .85; }
+    70%  { opacity: .18; }
+    100% { transform: translate(-50%,-50%) scale(1.90); opacity: 0; }
+  }
+
+  #music-container.collapsed:not(.playing) .disc-wrap::before,
+  #music-container.collapsed:not(.playing) .disc-wrap::after{
+    display:none;
+  }
+
+  /* 圆盘本体 */
+  .disc{
+    width: 54px;
+    height: 54px;
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,.10) 0 22%, rgba(0,0,0,.0) 23%),
+      radial-gradient(circle at 50% 50%, rgba(0,0,0,.0) 0 48%, rgba(255,255,255,.10) 49% 51%, rgba(0,0,0,.0) 52%),
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), rgba(0,0,0,.0) 60%),
+      radial-gradient(circle at 70% 80%, rgba(255,255,255,.06), rgba(0,0,0,.0) 60%),
+      linear-gradient(145deg, #0a0a0a, #1a1a1a);
+    box-shadow:
+      0 10px 24px rgba(0,0,0,.45),
+      0 0 0 2px rgba(255,255,255,.06) inset;
+    overflow: hidden;
+    display:grid;
+    place-items:center;
+  }
+
+  .disc img{
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    object-fit: cover;
+    box-shadow: 0 0 0 2px rgba(255,255,255,.08);
+    display:block;
+  }
+
+  #music-container.playing .disc{
+    animation: discSpin 2.2s linear infinite;
+  }
+  @keyframes discSpin{
+    from{ transform: rotate(0deg); }
+    to{ transform: rotate(360deg); }
+  }
+
+  /* ===== 展开态：毛玻璃播放器 ===== */
+  #music-container.expanded{
+    width: 420px;
+    height: 140px;
+  }
+
+  #panel{
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    backdrop-filter: blur(16px) saturate(140%);
+    display: none;
+    gap: 12px;
+    padding: 12px 14px;
+    position: relative;
+  }
+  #music-container.expanded #panel{ display: flex; }
+  #music-container.expanded .disc-wrap{ display:none; }
+
+  #panel::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:18px;
+    pointer-events:none;
+    background-image: radial-gradient(rgba(255,255,255,.20) 1px, transparent 1px);
+    background-size: 6px 6px;
+    opacity: .16;
+    mix-blend-mode: overlay;
+  }
+
+  #cover{
+    width: 66px;
+    height: 66px;
+    border-radius: 999px;
+    overflow: hidden;
+    flex: 0 0 auto;
+    border: 2px solid rgba(255,255,255,.7);
+    box-shadow: 0 6px 18px rgba(0,0,0,.18) inset, 0 8px 18px rgba(0,0,0,.12);
+    margin-top: 2px;
+  }
+  #cover img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  #main{
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+  }
+
+  #meta{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    gap: 2px;
+  }
+  #artist{
+    font-size: 14px;
+    color: var(--text-soft);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #title{
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-strong);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.1;
+  }
+
+  /* 进度条行 */
+  #row{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    margin-top: 2px;
+  }
+
+  #tcur, #tdur{
+    font-size: 12px;
+    color: var(--text-mid);
+    width: 34px;
+    flex: 0 0 auto;
+  }
+  #tdur{ text-align:right; }
+
+  #progress{
+    flex: 1 1 auto;
+    appearance: none;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(0,0,0,.15);
+    outline: none;
+  }
+  #progress::-webkit-slider-thumb{
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(0,0,0,.55);
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    cursor: pointer;
+  }
+  #progress::-moz-range-thumb{
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(0,0,0,.55);
+    cursor: pointer;
+  }
+
+  /* 底部行：按钮 + 列表 + 音量 */
+  #bottom{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    margin-top: 2px;
+  }
+
+  #btns{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+  }
+
+  .btn{
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+  }
+  .btn:hover{ background: rgba(255,255,255,.35); }
+  .btn svg{ width: 18px; height: 18px; fill: rgba(0,0,0,.65); }
+
+  #play-pause{
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.35);
+  }
+  #play-pause:hover{ background: rgba(255,255,255,.50); }
+  #play-pause svg{ width: 20px; height: 20px; }
+
+  #list-btn{ margin-left: auto; }
+
+  #volwrap{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+  }
+  #volume{
+    width: 86px;
+    appearance: none;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(0,0,0,.15);
+    outline: none;
+  }
+  #volume::-webkit-slider-thumb{
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(0,0,0,.55);
+    cursor: pointer;
+  }
+
+  /* =========================
+     歌单弹层：固定大小 + 可滚动（你要的点）
+     - 外层固定 max-height（保持你现在差不多）
+     - 列表区域 overflow:auto，带“滚条”
+     - 兼容手机/电脑：支持触摸惯性滚动 + 自定义滚条样式
+     ========================= */
+  #playlist{
+    position: absolute;
+    left: 0;
+    bottom: 44px;
+    width: 320px;
+    height: 220px;              /* 固定大小（保持现在差不多） */
+    max-height: 220px;
+    border-radius: 14px;
+    background: rgba(20,20,20,.42);
+    border: 1px solid rgba(255,255,255,.18);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    backdrop-filter: blur(14px) saturate(150%);
+    box-shadow: 0 18px 40px rgba(0,0,0,.25);
+    overflow: hidden;           /* 外层不滚，只让列表区域滚 */
+    display: none;
+  }
+  #playlist.show{ display:block; }
+
+  #playlist .pl-head{
+    padding: 10px 12px;
+    font-size: 12px;
+    color: rgba(255,255,255,.75);
+    border-bottom: 1px solid rgba(255,255,255,.10);
+    flex: 0 0 auto;
+  }
+
+  #playlist .pl-list{
+    height: calc(220px - 41px); /* 220 - 头部大概高度，让列表固定滚动区 */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch; /* iOS/手机：惯性滚动 */
+    overscroll-behavior: contain;       /* 防止滚动穿透页面 */
+    padding: 4px 0;
+  }
+
+  .pl-item{
+    padding: 10px 12px;
+    cursor: pointer;
+    display:flex;
+    gap: 8px;
+    align-items:center;
+    color: rgba(255,255,255,.85);
+    font-size: 13px;
+  }
+  .pl-item:hover{ background: rgba(255,255,255,.10); }
+  .pl-item.active{ background: rgba(255,255,255,.14); }
+
+  .pl-item .dot{
+    width: 6px; height:6px; border-radius:999px;
+    background: rgba(255,255,255,.55);
+    flex: 0 0 auto;
+    opacity:.6;
+  }
+  .pl-item.active .dot{ opacity:1; }
+
+  /* 桌面端滚条美化（不影响手机） */
+  #playlist .pl-list::-webkit-scrollbar{
+    width: 8px;
+  }
+  #playlist .pl-list::-webkit-scrollbar-track{
+    background: rgba(255,255,255,.08);
+    border-radius: 999px;
+  }
+  #playlist .pl-list::-webkit-scrollbar-thumb{
+    background: rgba(255,255,255,.25);
+    border-radius: 999px;
+    border: 2px solid rgba(0,0,0,0);
+    background-clip: padding-box;
+  }
+  #playlist .pl-list::-webkit-scrollbar-thumb:hover{
+    background: rgba(255,255,255,.34);
+  }
+
+  /* 小屏 */
+  @media (max-width: 460px){
+    #music-container.expanded{ width: 92vw; }
+    #volume{ width: 70px; }
+
+    #playlist{
+      width: 78vw;
+      left: 0;
+      height: 220px;         /* 仍固定 */
+      max-height: 220px;
+    }
+    #playlist .pl-list{
+      height: calc(220px - 41px);
+    }
+  }
+</style>
+
+<div id="music-container" class="collapsed" aria-label="音乐播放器">
+  <!-- 折叠态圆盘 -->
+  <div class="disc-wrap" id="discToggle" title="点击展开">
+    <span class="ring r3"></span>
+    <span class="ring r2"></span>
+    <span class="ring r1"></span>
+    <div class="disc">
+      <img id="discCover" alt="cover" src="https://picsum.photos/200/200?blur=1">
+    </div>
+  </div>
+
+  <!-- 展开态面板 -->
+  <div id="panel" aria-label="播放器面板">
+    <div id="cover"><img id="coverImg" alt="cover" src="https://picsum.photos/200/200?blur=1"></div>
+
+    <div id="main">
+      <div id="meta">
+        <div id="artist">加载中...</div>
+        <div id="title">加载中...</div>
+      </div>
+
+      <div id="row">
+        <span id="tcur">0:00</span>
+        <input id="progress" type="range" min="0" max="1000" value="0" step="1" aria-label="播放进度">
+        <span id="tdur">0:00</span>
+      </div>
+
+      <div id="bottom">
+        <div id="btns">
+          <button class="btn" id="prev" title="上一首" aria-label="上一首">
+            <svg viewBox="0 0 24 24"><path d="M11 18V6L2 12l9 6zm2-6l9 6V6l-9 6z"/></svg>
+          </button>
+
+          <button class="btn" id="play-pause" title="播放/暂停" aria-label="播放/暂停">
+            <svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="pause-icon" viewBox="0 0 24 24" style="display:none;">
+              <rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/>
+            </svg>
+          </button>
+
+          <button class="btn" id="next" title="下一首" aria-label="下一首">
+            <svg viewBox="0 0 24 24"><path d="M13 18V6l9 6-9 6zM2 18V6l9 6-9 6z"/></svg>
+          </button>
+        </div>
+
+        <button class="btn" id="list-btn" title="列表" aria-label="歌曲列表">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/></svg>
+        </button>
+
+        <div id="volwrap" aria-label="音量">
+          <svg viewBox="0 0 24 24" width="18" height="18" style="fill: rgba(0,0,0,.55);">
+            <path d="M3 10v4h4l5 4V6L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+          </svg>
+          <input id="volume" type="range" min="0" max="100" value="70" step="1" aria-label="音量">
+        </div>
+
+        <!-- 歌单弹层 -->
+        <div id="playlist" aria-label="歌曲列表">
+          <div class="pl-head">歌曲列表（点击切换）</div>
+          <div class="pl-list" id="plList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== 你的播放列表示例（结构不变，可继续加）=====
+  const songs = [
+    {
+      "title": "说好的幸福呢 - 周杰伦",
+      "src": "https://hf-lwmuisc-hf-lwmusic.hf.space/music/%E8%AF%B4%E5%A5%BD%E7%9A%84%E5%B9%B8%E7%A6%8F%E5%91%A2%20-%20%E5%91%A8%E6%9D%B0%E4%BC%A6.flac"
+    },
+    {
+      title: "富士山下 - 陈奕迅",
+      src: "https://music.gvrander.eu.org/music/%E5%AF%8C%E5%A3%AB%E5%B1%B1%E4%B8%8B-%E9%99%88%E5%A5%95%E8%BF%85.mp3",
+    },
+    {
+      title: "人间烟火 - 程响",
+      src: "https://music.gvrander.eu.org/music/%E4%BA%BA%E9%97%B4%E7%83%9F%E7%81%AB-%E7%A8%8B%E5%93%8D.flac",
+    },
+    {
+      title: "天黑黑 - 孙燕姿",
+      src: "https://hf-lwmuisc-hf-lwmusic.hf.space/music/%E5%A4%A9%E9%BB%91%E9%BB%91%20-%20%E5%AD%99%E7%87%95%E5%A7%BF.flac",
+    },
+    {
+      title: "为你我受冷风吹 - 小阿七",
+      src: "https://music.gvrander.eu.org/music/%E4%B8%BA%E4%BD%A0%E6%88%91%E5%8F%97%E5%86%B7%E9%A3%8E%E5%90%B9-%E5%B0%8F%E9%98%BF%E4%B8%83.mp3",
+    },
+    {
+      title: "Someone you loved - 七元",
+      src: "https://music.gvrander.eu.org/music/Someone%20you%20loved-%E4%B8%83%E5%85%83.mp3",
+    },
+    {
+      title: "Let Her Go - Passenger",
+      src: "https://music.gvrander.eu.org/music/Let%20Her%20Go-Passenger.flac",
+    },
+    {
+      title: "只是太爱你 - 张敬轩",
+      src: "https://music.gvrander.eu.org/music/%E5%8F%AA%E6%98%AF%E5%A4%AA%E7%88%B1%E4%BD%A0-%E5%BC%A0%E6%95%AC%E8%BD%A9.mp3",
+    },
+    {
+      title: "刚刚好 - 薛之谦",
+      src: "https://music.gvrander.eu.org/music/%E5%88%9A%E5%88%9A%E5%A5%BD-%E8%96%9B%E4%B9%8B%E8%B0%A6.mp3",
+    },
+  ];
+
+  let currentSongIndex = Math.floor(Math.random() * songs.length);
+  let audio = null;
+  let isPlaying = false;
+  let hasInteracted = false;
+  let isSeeking = false;
+
+  const container = document.getElementById('music-container');
+  const discToggle = document.getElementById('discToggle');
+  const playlist = document.getElementById('playlist');
+  const plList = document.getElementById('plList');
+
+  const $artist = document.getElementById('artist');
+  const $title  = document.getElementById('title');
+  const $cur    = document.getElementById('tcur');
+  const $dur    = document.getElementById('tdur');
+  const $prog   = document.getElementById('progress');
+  const $vol    = document.getElementById('volume');
+  const $cover  = document.getElementById('coverImg');
+  const $discCover = document.getElementById('discCover');
+
+  function fmtTime(sec){
+    if (!isFinite(sec) || sec < 0) return "0:00";
+    sec = Math.floor(sec);
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m}:${String(s).padStart(2,'0')}`;
+  }
+
+  function splitTitle(t){
+    const idx = t.lastIndexOf(' - ');
+    if (idx > -1) return { name: t.slice(0, idx), artist: t.slice(idx + 3) };
+    return { name: t, artist: '' };
+  }
+
+  function setCover(url){
+    if (!url) return;
+    $cover.src = url;
+    $discCover.src = url;
+  }
+
+  function updateButtonState() {
+    document.getElementById('play-icon').style.display  = isPlaying ? 'none' : 'block';
+    document.getElementById('pause-icon').style.display = isPlaying ? 'block' : 'none';
+    document.getElementById('play-pause').title = isPlaying ? '暂停' : '播放';
+    container.classList.toggle('playing', isPlaying);
+  }
+
+  function updateMetaUI() {
+    const s = songs[currentSongIndex];
+    const { name, artist } = splitTitle(s?.title || '未知音轨');
+    $artist.textContent = artist || ' ';
+    $title.textContent  = name;
+
+    if (s?.cover) setCover(s.cover);
+
+    [...plList.querySelectorAll('.pl-item')].forEach((el, i) => {
+      el.classList.toggle('active', i === currentSongIndex);
+    });
+  }
+
+  function initPlaylistUI(){
+    plList.innerHTML = "";
+    songs.forEach((s, i) => {
+      const { name, artist } = splitTitle(s.title || `未知音轨 ${i+1}`);
+      const item = document.createElement('div');
+      item.className = 'pl-item' + (i === currentSongIndex ? ' active' : '');
+      item.innerHTML =
+        `<span class="dot"></span>
+         <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+           ${name}${artist ? " - " + artist : ""}
+         </span>`;
+      item.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        if (i === currentSongIndex) return;
+        currentSongIndex = i;
+        await loadAndPlay(true);
+        showPlaylist(false);
+      });
+      plList.appendChild(item);
+    });
+  }
+
+  function initAudio() {
+    if (audio) return;
+
+    audio = new Audio();
+    audio.preload = "auto";
+    audio.volume = (Number($vol.value) || 70) / 100;
+
+    audio.addEventListener('ended', () => {
+      let nextIndex;
+      do {
+        nextIndex = Math.floor(Math.random() * songs.length);
+      } while (nextIndex === currentSongIndex && songs.length > 1);
+
+      currentSongIndex = nextIndex;
+      loadAndPlay(true);
+    });
+
+    audio.addEventListener('play',  () => { isPlaying = true;  updateButtonState(); });
+    audio.addEventListener('pause', () => { isPlaying = false; updateButtonState(); });
+
+    audio.addEventListener('loadedmetadata', () => {
+      $dur.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (!audio || isSeeking) return;
+
+      $cur.textContent = fmtTime(audio.currentTime);
+
+      const d = audio.duration;
+      if (isFinite(d) && d > 0) {
+        $prog.value = String(Math.round((audio.currentTime / d) * 1000));
+      }
+    });
+
+    audio.addEventListener('error', () => {
+      isPlaying = false;
+      updateButtonState();
+      $title.textContent = '播放失败，换首试试';
+    });
+  }
+
+  async function loadAndPlay(autoplay = true) {
+    try {
+      initAudio();
+
+      const s = songs[currentSongIndex];
+      if (!s?.src) throw new Error("src missing");
+
+      updateMetaUI();
+
+      if (audio.src !== s.src) {
+        audio.src = s.src;
+        await new Promise((resolve, reject) => {
+          audio.addEventListener('loadedmetadata', resolve, { once: true });
+          audio.addEventListener('error', reject, { once: true });
+        });
+      }
+
+      $cur.textContent = fmtTime(audio.currentTime || 0);
+      $dur.textContent = fmtTime(audio.duration || 0);
+
+      if (autoplay) await audio.play();
+    } catch (err) {
+      console.log("播放失败:", err);
+      isPlaying = false;
+      updateButtonState();
+      $title.textContent = '播放失败，换首试试';
+    }
+  }
+
+  async function togglePlayPause() {
+    if (!audio) return;
+    try { audio.paused ? await audio.play() : audio.pause(); }
+    catch (err) { console.log("播放控制失败:", err); }
+  }
+
+  // ===== 展开/收起 =====
+  function expand(){
+    container.classList.remove('collapsed');
+    container.classList.add('expanded');
+    showPlaylist(false);
+  }
+  function collapse(){
+    container.classList.remove('expanded');
+    container.classList.add('collapsed');
+    showPlaylist(false);
+  }
+  function showPlaylist(show){
+    playlist.classList.toggle('show', !!show);
+  }
+
+  discToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    expand();
+  });
+
+  container.addEventListener('click', (e) => e.stopPropagation());
+
+  document.addEventListener('click', () => {
+    if (container.classList.contains('expanded')) collapse();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && container.classList.contains('expanded')) collapse();
+  });
+
+  // ===== 进度条拖动 =====
+  $prog.addEventListener('input', () => { isSeeking = true; });
+  $prog.addEventListener('change', () => {
+    if (!audio) return;
+    const d = audio.duration;
+    if (!isFinite(d) || d <= 0) { isSeeking = false; return; }
+    audio.currentTime = Math.max(0, Math.min(d, (Number($prog.value) / 1000) * d));
+    isSeeking = false;
+  });
+
+  // ===== 音量 =====
+  $vol.addEventListener('input', () => {
+    if (!audio) initAudio();
+    audio.volume = Number($vol.value) / 100;
+  });
+
+  // ===== 首次交互自动播放（保留你原逻辑）=====
+  function playOnFirstInteraction() {
+    if (hasInteracted) return;
+    hasInteracted = true;
+    window.removeEventListener('click', playOnFirstInteraction);
+    window.removeEventListener('keydown', playOnFirstInteraction);
+    loadAndPlay(true);
+  }
+  window.addEventListener('click', playOnFirstInteraction, { once: true });
+  window.addEventListener('keydown', playOnFirstInteraction, { once: true });
+
+  // ===== 控件事件 =====
+  document.getElementById("play-pause").addEventListener("click", (e) => {
+    e.stopPropagation();
+    togglePlayPause();
+  });
+
+  document.getElementById("next").addEventListener("click", async (e) => {
+    e.stopPropagation();
+    let nextIndex;
+    do {
+      nextIndex = Math.floor(Math.random() * songs.length);
+    } while (nextIndex === currentSongIndex && songs.length > 1);
+    currentSongIndex = nextIndex;
+    await loadAndPlay(true);
+  });
+
+  document.getElementById("prev").addEventListener("click", async (e) => {
+    e.stopPropagation();
+    let prevIndex;
+    do {
+      prevIndex = Math.floor(Math.random() * songs.length);
+    } while (prevIndex === currentSongIndex && songs.length > 1);
+    currentSongIndex = prevIndex;
+    await loadAndPlay(true);
+  });
+
+  document.getElementById("list-btn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    showPlaylist(!playlist.classList.contains('show'));
+  });
+
+  // ===== 初始化 =====
+  window.addEventListener('load', () => {
+    initAudio();
+    initPlaylistUI();
+    updateMetaUI();
+    updateButtonState();
+  });
+</script>
+
+
+</body>
 </html>
